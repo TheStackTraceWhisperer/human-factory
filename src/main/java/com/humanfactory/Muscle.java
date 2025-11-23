@@ -2,7 +2,7 @@ package com.humanfactory;
 
 /**
  * Enum representing major skeletal muscles in the human body.
- * The human body contains over 600 skeletal muscles.
+ * This enum contains 387 major skeletal muscles across all anatomical regions.
  */
 public enum Muscle {
     // Head and Neck Muscles

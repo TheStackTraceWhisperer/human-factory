@@ -12,11 +12,11 @@ public class MuscleTest {
 
     /**
      * Test that the Muscle enum has a reasonable number of muscles.
-     * The human body has over 600 skeletal muscles.
+     * This enum contains 387 major skeletal muscles.
      */
     @Test
     public void shouldHaveMultipleMuscles() {
-        assertTrue(Muscle.values().length > 100, "Should have more than 100 major muscles defined");
+        assertTrue(Muscle.values().length > 300, "Should have more than 300 major muscles defined");
     }
 
     /**
