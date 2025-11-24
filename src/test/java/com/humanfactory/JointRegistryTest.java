@@ -354,9 +354,10 @@ public class JointRegistryTest {
      */
     @Test
     public void shouldCreateJointRecordCorrectly() {
-        JointRegistry.Joint testJoint = new JointRegistry.Joint(Bone.SACRUM, JointType.CARTILAGINOUS);
+        JointRegistry.Joint testJoint = new JointRegistry.Joint(Bone.SACRUM, JointType.CARTILAGINOUS, JointLimits.LOCKED);
         assertEquals(Bone.SACRUM, testJoint.parent());
         assertEquals(JointType.CARTILAGINOUS, testJoint.type());
+        assertNotNull(testJoint.limits());
     }
 
     /**
@@ -367,5 +368,38 @@ public class JointRegistryTest {
         JointRegistry.Joint axisJoint = JointRegistry.getJoint(Bone.CERVICAL_2_AXIS);
         assertNotNull(axisJoint);
         assertEquals(JointType.PIVOT, axisJoint.type(), "C2 Axis should have PIVOT joint for rotation");
+    }
+
+    /**
+     * Test that all joints have JointLimits defined.
+     */
+    @Test
+    public void shouldHaveJointLimitsForAllJoints() {
+        // Test a few representative joints
+        JointRegistry.Joint shoulderJoint = JointRegistry.getJoint(Bone.HUMERUS_LEFT);
+        assertNotNull(shoulderJoint.limits(), "Shoulder should have limits defined");
+        
+        JointRegistry.Joint elbowJoint = JointRegistry.getJoint(Bone.ULNA_LEFT);
+        assertNotNull(elbowJoint.limits(), "Elbow should have limits defined");
+        
+        JointRegistry.Joint hipJoint = JointRegistry.getJoint(Bone.FEMUR_LEFT);
+        assertNotNull(hipJoint.limits(), "Hip should have limits defined");
+        
+        JointRegistry.Joint kneeJoint = JointRegistry.getJoint(Bone.TIBIA_LEFT);
+        assertNotNull(kneeJoint.limits(), "Knee should have limits defined");
+    }
+
+    /**
+     * Test that locked joints (like skull sutures) have LOCKED limits.
+     */
+    @Test
+    public void shouldHaveLockedLimitsForSutures() {
+        JointRegistry.Joint frontalJoint = JointRegistry.getJoint(Bone.FRONTAL);
+        assertNotNull(frontalJoint.limits());
+        assertEquals(JointLimits.LOCKED, frontalJoint.limits(), "Skull sutures should be LOCKED");
+        
+        JointRegistry.Joint coccyxJoint = JointRegistry.getJoint(Bone.COCCYX);
+        assertNotNull(coccyxJoint.limits());
+        assertEquals(JointLimits.LOCKED, coccyxJoint.limits(), "Coccyx should be LOCKED");
     }
 }
