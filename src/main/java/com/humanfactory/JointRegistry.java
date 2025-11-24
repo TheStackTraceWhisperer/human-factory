@@ -45,11 +45,11 @@ public class JointRegistry {
         entry(Bone.CERVICAL_5,       new Joint(Bone.CERVICAL_6, JointType.CARTILAGINOUS, JointLimits.ball(-10, 10, -10, 10, -10, 10))),
         entry(Bone.CERVICAL_4,       new Joint(Bone.CERVICAL_5, JointType.CARTILAGINOUS, JointLimits.ball(-10, 10, -10, 10, -10, 10))),
         entry(Bone.CERVICAL_3,       new Joint(Bone.CERVICAL_4, JointType.CARTILAGINOUS, JointLimits.ball(-10, 10, -10, 10, -10, 10))),
-        entry(Bone.CERVICAL_2_AXIS,  new Joint(Bone.CERVICAL_3, JointType.PIVOT, JointLimits.pivot(-80, 80))), // Head shake "No"
-        entry(Bone.CERVICAL_1_ATLAS, new Joint(Bone.CERVICAL_2_AXIS, JointType.HINGE, JointLimits.hinge(-45, 45))), // Head nod "Yes"
+        entry(Bone.CERVICAL_2_AXIS,  new Joint(Bone.CERVICAL_3, JointType.CARTILAGINOUS, JointLimits.ball(-10, 10, -10, 10, -10, 10))),
+        entry(Bone.CERVICAL_1_ATLAS, new Joint(Bone.CERVICAL_2_AXIS, JointType.PIVOT, JointLimits.pivot(-80, 80))), // Head shake "No" (Rotation)
 
         // --- Skull ---
-        entry(Bone.OCCIPITAL,     new Joint(Bone.CERVICAL_1_ATLAS, JointType.CONDYLOID, JointLimits.LOCKED)),
+        entry(Bone.OCCIPITAL,     new Joint(Bone.CERVICAL_1_ATLAS, JointType.CONDYLOID, JointLimits.biaxial(-25, 25, -10, 10))), // Head nod "Yes" (Flexion/Extension)
         entry(Bone.SPHENOID,      new Joint(Bone.OCCIPITAL, JointType.FIBROUS, JointLimits.LOCKED)),
         entry(Bone.FRONTAL,       new Joint(Bone.SPHENOID, JointType.FIBROUS, JointLimits.LOCKED)),
         entry(Bone.PARIETAL_LEFT, new Joint(Bone.OCCIPITAL, JointType.FIBROUS, JointLimits.LOCKED)),

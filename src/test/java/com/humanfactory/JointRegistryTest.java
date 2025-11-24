@@ -66,7 +66,7 @@ public class JointRegistryTest {
         JointRegistry.Joint atlasJoint = JointRegistry.getJoint(Bone.CERVICAL_1_ATLAS);
         assertNotNull(atlasJoint);
         assertEquals(Bone.CERVICAL_2_AXIS, atlasJoint.parent());
-        assertEquals(JointType.HINGE, atlasJoint.type(), "Atlas-Axis should be a HINGE joint for nodding");
+        assertEquals(JointType.PIVOT, atlasJoint.type(), "Atlas-Axis should be a PIVOT joint for rotation (shaking head 'No')");
     }
 
     /**
@@ -361,13 +361,19 @@ public class JointRegistryTest {
     }
 
     /**
-     * Test special joint types - PIVOT for neck rotation.
+     * Test special joint types - PIVOT for neck rotation and CONDYLOID for nodding.
      */
     @Test
     public void shouldHavePivotJointForNeckRotation() {
-        JointRegistry.Joint axisJoint = JointRegistry.getJoint(Bone.CERVICAL_2_AXIS);
-        assertNotNull(axisJoint);
-        assertEquals(JointType.PIVOT, axisJoint.type(), "C2 Axis should have PIVOT joint for rotation");
+        // Atlas-Axis joint allows rotation (shaking head "No")
+        JointRegistry.Joint atlasJoint = JointRegistry.getJoint(Bone.CERVICAL_1_ATLAS);
+        assertNotNull(atlasJoint);
+        assertEquals(JointType.PIVOT, atlasJoint.type(), "Atlas-Axis joint should be PIVOT for head rotation");
+        
+        // Occipital-Atlas joint allows nodding (nodding head "Yes")
+        JointRegistry.Joint occipitalJoint = JointRegistry.getJoint(Bone.OCCIPITAL);
+        assertNotNull(occipitalJoint);
+        assertEquals(JointType.CONDYLOID, occipitalJoint.type(), "Occipital-Atlas joint should be CONDYLOID for head nodding");
     }
 
     /**
