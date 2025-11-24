@@ -44,17 +44,17 @@ public class JointRegistry {
         entry(Bone.CERVICAL_5,       new Joint(Bone.CERVICAL_6, JointType.CARTILAGINOUS)),
         entry(Bone.CERVICAL_4,       new Joint(Bone.CERVICAL_5, JointType.CARTILAGINOUS)),
         entry(Bone.CERVICAL_3,       new Joint(Bone.CERVICAL_4, JointType.CARTILAGINOUS)),
-        entry(Bone.CERVICAL_2_AXIS,  new Joint(Bone.CERVICAL_3, JointType.PIVOT)), // Allows head rotation (No)
-        entry(Bone.CERVICAL_1_ATLAS, new Joint(Bone.CERVICAL_2_AXIS, JointType.HINGE)), // Allows head nodding (Yes)
+        entry(Bone.CERVICAL_2_AXIS,  new Joint(Bone.CERVICAL_3, JointType.PIVOT)), // Allows head rotation
+        entry(Bone.CERVICAL_1_ATLAS, new Joint(Bone.CERVICAL_2_AXIS, JointType.HINGE)), // Allows head nodding
 
         // --- Skull ---
         entry(Bone.OCCIPITAL,     new Joint(Bone.CERVICAL_1_ATLAS, JointType.CONDYLOID)),
         entry(Bone.SPHENOID,      new Joint(Bone.OCCIPITAL, JointType.FIBROUS)),
         entry(Bone.FRONTAL,       new Joint(Bone.SPHENOID, JointType.FIBROUS)),
         entry(Bone.PARIETAL_LEFT, new Joint(Bone.OCCIPITAL, JointType.FIBROUS)),
-        entry(Bone.PARIETAL_RIGHT,new Joint(Bone.OCCIPITAL, JointType.FIBROUS)),
+        entry(Bone.PARIETAL_RIGHT, new Joint(Bone.OCCIPITAL, JointType.FIBROUS)),
         entry(Bone.TEMPORAL_LEFT, new Joint(Bone.PARIETAL_LEFT, JointType.FIBROUS)),
-        entry(Bone.TEMPORAL_RIGHT,new Joint(Bone.PARIETAL_RIGHT, JointType.FIBROUS)),
+        entry(Bone.TEMPORAL_RIGHT, new Joint(Bone.PARIETAL_RIGHT, JointType.FIBROUS)),
         entry(Bone.MANDIBLE,      new Joint(Bone.TEMPORAL_LEFT, JointType.HINGE)), // Simplified parent (TMJ)
 
         // --- Rib Cage ---
