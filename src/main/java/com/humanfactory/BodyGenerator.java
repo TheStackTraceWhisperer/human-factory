@@ -86,6 +86,7 @@ public class BodyGenerator {
         // Ratios: Lumbar (35%), Thoracic (45%), Cervical (20%)
         
         // --- LUMBAR (Lower Back) ---
+        // Array ordered bottom-up (L5 is lowest, connects to sacrum)
         Bone[] lumbar = {Bone.LUMBAR_5, Bone.LUMBAR_4, Bone.LUMBAR_3, Bone.LUMBAR_2, Bone.LUMBAR_1};
         float lumbarSegH = (torsoLen * 0.35f) / lumbar.length;
         
@@ -98,6 +99,7 @@ public class BodyGenerator {
         }
 
         // --- THORACIC (Rib Cage Area) ---
+        // Array ordered bottom-up (T12 is lowest, T1 is highest/connects to cervical)
         Bone[] thoracic = {
             Bone.THORACIC_12, Bone.THORACIC_11, Bone.THORACIC_10, Bone.THORACIC_9, 
             Bone.THORACIC_8, Bone.THORACIC_7, Bone.THORACIC_6, Bone.THORACIC_5, 
@@ -113,8 +115,7 @@ public class BodyGenerator {
                 List.of(new BoneShape.Box(new Vector3f(0.035f * dna.buildFactor, thoracicSegH * 0.9f, 0.035f), new Vector3f(), new Quaternionf()))
             );
             
-            // Attach Ribs (1-12) to corresponding Thoracic Vertebrae
-            // We map index 0 (T12) to Rib 12, etc. (Array is reversed order bottom-up)
+            // Attach corresponding rib pair (index 0 = T12 = Rib 12, etc.)
             int ribNum = 12 - i; 
             generateRibPair(map, ribNum, dna);
         }
@@ -136,10 +137,6 @@ public class BodyGenerator {
     }
 
     private void generateRibPair(Map<Bone, BoneDefinition> map, int ribNumber, BodyDNA dna) {
-        // Look up the specific Rib Enum bones (simplified for brevity, usually a switch or map lookup)
-        // Here we assume the user has provided the mapping or we use string reflection (risky) 
-        // OR we manually map them. For the "Complete Solution", manual mapping is safest.
-        
         Bone left = getRibBone(ribNumber, true);
         Bone right = getRibBone(ribNumber, false);
         if (left == null || right == null) return;
@@ -267,17 +264,57 @@ public class BodyGenerator {
         createBone(map, navicular, 0.04f, new Vector3f(0, -0.02f, 0.04f), 0.05f, List.of());
 
         // Toes (Metatarsals + Phalanges)
-        // Big Toe
+        float sign = isLeft ? 1f : -1f;
+        
+        // Big Toe (2 phalanges)
         generateDigit(map, 
             isLeft ? Bone.METATARSAL_1_LEFT : Bone.METATARSAL_1_RIGHT,
             isLeft ? Bone.PROXIMAL_PHALANX_BIG_TOE_LEFT : Bone.PROXIMAL_PHALANX_BIG_TOE_RIGHT,
-            null, // No middle phalanx for thumb/big toe
+            null, // No middle phalanx for big toe
             isLeft ? Bone.DISTAL_PHALANX_BIG_TOE_LEFT : Bone.DISTAL_PHALANX_BIG_TOE_RIGHT,
-            new Vector3f(isLeft ? 0.02f : -0.02f, 0, 0.05f), // Start position
+            new Vector3f(sign * 0.02f, 0, 0.05f),
             0.08f, 0.02f
         );
 
-        // ... Loop logic for Toes 2-5 would follow here similar to Hand logic below
+        // Toe 2 (3 phalanges)
+        generateDigit(map,
+            isLeft ? Bone.METATARSAL_2_LEFT : Bone.METATARSAL_2_RIGHT,
+            isLeft ? Bone.PROXIMAL_PHALANX_TOE_2_LEFT : Bone.PROXIMAL_PHALANX_TOE_2_RIGHT,
+            isLeft ? Bone.MIDDLE_PHALANX_TOE_2_LEFT : Bone.MIDDLE_PHALANX_TOE_2_RIGHT,
+            isLeft ? Bone.DISTAL_PHALANX_TOE_2_LEFT : Bone.DISTAL_PHALANX_TOE_2_RIGHT,
+            new Vector3f(sign * 0.01f, 0, 0.05f),
+            0.07f, 0.015f
+        );
+
+        // Toe 3 (3 phalanges)
+        generateDigit(map,
+            isLeft ? Bone.METATARSAL_3_LEFT : Bone.METATARSAL_3_RIGHT,
+            isLeft ? Bone.PROXIMAL_PHALANX_TOE_3_LEFT : Bone.PROXIMAL_PHALANX_TOE_3_RIGHT,
+            isLeft ? Bone.MIDDLE_PHALANX_TOE_3_LEFT : Bone.MIDDLE_PHALANX_TOE_3_RIGHT,
+            isLeft ? Bone.DISTAL_PHALANX_TOE_3_LEFT : Bone.DISTAL_PHALANX_TOE_3_RIGHT,
+            new Vector3f(0, 0, 0.05f),
+            0.065f, 0.015f
+        );
+
+        // Toe 4 (3 phalanges)
+        generateDigit(map,
+            isLeft ? Bone.METATARSAL_4_LEFT : Bone.METATARSAL_4_RIGHT,
+            isLeft ? Bone.PROXIMAL_PHALANX_TOE_4_LEFT : Bone.PROXIMAL_PHALANX_TOE_4_RIGHT,
+            isLeft ? Bone.MIDDLE_PHALANX_TOE_4_LEFT : Bone.MIDDLE_PHALANX_TOE_4_RIGHT,
+            isLeft ? Bone.DISTAL_PHALANX_TOE_4_LEFT : Bone.DISTAL_PHALANX_TOE_4_RIGHT,
+            new Vector3f(sign * -0.01f, 0, 0.05f),
+            0.06f, 0.015f
+        );
+
+        // Little Toe (3 phalanges)
+        generateDigit(map,
+            isLeft ? Bone.METATARSAL_5_LEFT : Bone.METATARSAL_5_RIGHT,
+            isLeft ? Bone.PROXIMAL_PHALANX_LITTLE_TOE_LEFT : Bone.PROXIMAL_PHALANX_LITTLE_TOE_RIGHT,
+            isLeft ? Bone.MIDDLE_PHALANX_LITTLE_TOE_LEFT : Bone.MIDDLE_PHALANX_LITTLE_TOE_RIGHT,
+            isLeft ? Bone.DISTAL_PHALANX_LITTLE_TOE_LEFT : Bone.DISTAL_PHALANX_LITTLE_TOE_RIGHT,
+            new Vector3f(sign * -0.02f, 0, 0.05f),
+            0.055f, 0.012f
+        );
     }
 
     private void generateArm(Map<Bone, BoneDefinition> map, boolean isLeft, float shoulderWidth, BodyDNA dna) {

@@ -266,6 +266,31 @@ public class BodyGeneratorTest {
     }
 
     @Test
+    @DisplayName("Should generate all five toes on each foot")
+    void testAllToesGeneration() {
+        BodyGenerator generator = new BodyGenerator();
+        BodyGenerator.BodyDNA dna = BodyGenerator.BodyDNA.averageMale();
+        
+        Map<Bone, BoneDefinition> skeleton = generator.generate(dna);
+        
+        // Left foot - all 5 toes with metatarsals
+        for (int i = 1; i <= 5; i++) {
+            assertTrue(skeleton.containsKey(Bone.valueOf("METATARSAL_" + i + "_LEFT")),
+                "Missing metatarsal " + i + " left");
+        }
+        
+        // Verify toe 2 has all 3 phalanges
+        assertTrue(skeleton.containsKey(Bone.PROXIMAL_PHALANX_TOE_2_LEFT));
+        assertTrue(skeleton.containsKey(Bone.MIDDLE_PHALANX_TOE_2_LEFT));
+        assertTrue(skeleton.containsKey(Bone.DISTAL_PHALANX_TOE_2_LEFT));
+        
+        // Verify little toe
+        assertTrue(skeleton.containsKey(Bone.PROXIMAL_PHALANX_LITTLE_TOE_LEFT));
+        assertTrue(skeleton.containsKey(Bone.MIDDLE_PHALANX_LITTLE_TOE_LEFT));
+        assertTrue(skeleton.containsKey(Bone.DISTAL_PHALANX_LITTLE_TOE_LEFT));
+    }
+
+    @Test
     @DisplayName("Should assign reasonable masses to bones")
     void testBoneMasses() {
         BodyGenerator generator = new BodyGenerator();
