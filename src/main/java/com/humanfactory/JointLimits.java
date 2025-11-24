@@ -37,7 +37,7 @@ public record JointLimits(
     
     // Condyloid/Saddle (Wrist, Thumb) - Pitch + Roll, no Twist
     public static JointLimits biaxial(float pitchMin, float pitchMax, float rollMin, float rollMax) {
-         return new JointLimits(
+        return new JointLimits(
             pitchMin * D2R, pitchMax * D2R,
             0, 0,
             rollMin * D2R, rollMax * D2R
